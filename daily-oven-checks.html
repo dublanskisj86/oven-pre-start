@@ -10,13 +10,16 @@
       --muted: #5b6673;
       --line: #d7dde5;
       --soft: #f6f8fb;
+      --paper: #ffffff;
       --accent: #155e8b;
       --accent-dark: #0e4262;
       --accent-soft: #e9f4fa;
+      --accent-pale: #f4f9fc;
       --warm: #fff3da;
       --warm-line: #d58a00;
       --green: #edf8ef;
       --green-line: #3f8d50;
+      --shadow: 0 1.5mm 5mm rgba(20, 42, 65, .10);
     }
 
     * { box-sizing: border-box; }
@@ -35,38 +38,42 @@
       min-height: 297mm;
       margin: 0 auto;
       padding: 7mm 10mm;
-      background: #fff;
+      background:
+        linear-gradient(180deg, #f7fbfe 0, #fff 28mm);
     }
 
     header {
       display: grid;
       grid-template-columns: 1fr 43mm;
       gap: 5mm;
-      align-items: end;
-      padding-bottom: 2.5mm;
-      border-bottom: 3px solid var(--accent);
+      align-items: center;
+      padding: 5mm;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent-dark), var(--accent));
+      box-shadow: var(--shadow);
     }
 
     h1 {
       margin: 0;
-      color: var(--accent-dark);
+      color: #fff;
       font-size: 19pt;
       line-height: 1.05;
     }
 
     .subtitle {
       margin: 1.5mm 0 0;
-      color: var(--muted);
+      color: #dbeefa;
       font-size: 9.4pt;
     }
 
     .key-box {
       padding: 2.1mm;
       border-radius: 10px;
-      background: var(--accent-soft);
+      background: rgba(255, 255, 255, .94);
       color: var(--accent-dark);
       font-weight: 800;
       text-align: center;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .7);
     }
 
     .key-box span {
@@ -88,12 +95,23 @@
       font-size: 10pt;
       text-transform: uppercase;
       letter-spacing: .04em;
+      display: flex;
+      align-items: center;
+      gap: 2mm;
+    }
+
+    h2::before {
+      content: "";
+      width: 5mm;
+      height: 1.2mm;
+      border-radius: 999px;
+      background: var(--accent);
     }
 
     .reason {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 4mm;
+      gap: 3mm;
     }
 
     .info-card,
@@ -102,7 +120,8 @@
       padding: 2.4mm;
       border-radius: 10px;
       border: 1px solid var(--line);
-      background: var(--soft);
+      background: var(--paper);
+      box-shadow: 0 .8mm 2.5mm rgba(31, 41, 51, .06);
     }
 
     .info-card strong,
@@ -121,11 +140,13 @@
       border: 1px solid var(--line);
       border-radius: 12px;
       overflow: hidden;
+      background: var(--paper);
+      box-shadow: var(--shadow);
     }
 
     .ramp-table th {
       padding: 2mm 2.3mm;
-      background: var(--accent);
+      background: var(--accent-dark);
       color: #fff;
       font-size: 7.8pt;
       text-align: left;
@@ -140,7 +161,16 @@
     }
 
     .ramp-table tbody tr:nth-child(odd) td {
-      background: var(--soft);
+      background: var(--accent-pale);
+    }
+
+    .ramp-table tbody tr:hover td {
+      background: var(--accent-soft);
+    }
+
+    .ramp-table td:nth-child(3),
+    .ramp-table td:nth-child(4) {
+      text-align: center;
     }
 
     .stage {
@@ -157,10 +187,11 @@
       width: 8mm;
       height: 8mm;
       border-radius: 50%;
-      background: var(--accent);
+      background: linear-gradient(135deg, var(--accent), #2782b3);
       color: #fff;
       font-size: 10pt;
       font-weight: 800;
+      box-shadow: 0 .5mm 1.5mm rgba(14, 66, 98, .25);
     }
 
     .stage small,
@@ -173,8 +204,13 @@
     }
 
     .speed {
+      display: inline-block;
+      padding: .8mm 1.6mm;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid #cfe2ef;
       color: var(--accent-dark);
-      font-size: 13pt;
+      font-size: 12.2pt;
       font-weight: 900;
       white-space: nowrap;
     }
@@ -189,12 +225,14 @@
       border-color: var(--warm-line);
       border-left: 6px solid var(--warm-line);
       background: var(--warm);
+      box-shadow: 0 .8mm 2.5mm rgba(213, 138, 0, .12);
     }
 
     .temp-card {
       border-color: var(--green-line);
       border-left: 6px solid var(--green-line);
       background: var(--green);
+      box-shadow: 0 .8mm 2.5mm rgba(63, 141, 80, .12);
     }
 
     .checks {
@@ -204,6 +242,8 @@
       border: 1px solid var(--line);
       border-radius: 12px;
       overflow: hidden;
+      background: var(--paper);
+      box-shadow: 0 .8mm 2.5mm rgba(31, 41, 51, .06);
     }
 
     .checks li {
@@ -224,7 +264,7 @@
       margin-top: .5mm;
       border: 1.6px solid var(--accent);
       border-radius: 50%;
-      background: var(--accent-soft);
+      background: radial-gradient(circle at center, #fff 0 35%, var(--accent-soft) 36%);
     }
 
     footer {
