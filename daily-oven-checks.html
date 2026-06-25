@@ -196,6 +196,41 @@
       font-size: 10.5pt;
     }
 
+    .check-list {
+      display: grid;
+      gap: 2mm;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .check-list li {
+      position: relative;
+      min-height: 10mm;
+      padding: 2.2mm 3mm 2.2mm 10mm;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--soft);
+    }
+
+    .check-list li::before {
+      content: "";
+      position: absolute;
+      left: 3mm;
+      top: 3mm;
+      width: 3.5mm;
+      height: 3.5mm;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .speed {
+      color: var(--accent);
+      font-size: 13pt;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
     .check-cell {
       width: 15mm;
       text-align: center;
@@ -233,6 +268,12 @@
       color: var(--muted);
       font-size: 9pt;
       font-weight: 400;
+    }
+
+    .important-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 3mm;
     }
 
     .signoff-grid {
@@ -281,195 +322,83 @@
   <main class="page">
     <header>
       <div>
-        <h1>Daily Oven Start-Up Checks</h1>
-        <p class="subtitle">Pre-heat, start-up sequence, speed settings, and sign-off record</p>
+        <h1>Oven Speed Reference</h1>
+        <p class="subtitle">Daily checks and settings to review when changing oven belt and hopper speeds</p>
       </div>
       <div class="status-card">
-        <strong>Print Daily</strong>
-        <span>Complete before production starts</span>
+        <strong>Daily Checks</strong>
+        <span>Read before speed changes</span>
       </div>
     </header>
 
-    <section class="section" aria-labelledby="shift-details">
-      <h2 class="section-title" id="shift-details">Shift details</h2>
-      <div class="info-grid">
-        <div class="field">
-          <span class="label">Date</span>
-          <span class="write-line"></span>
-        </div>
-        <div class="field">
-          <span class="label">Shift</span>
-          <span class="write-line"></span>
-        </div>
-        <div class="field">
-          <span class="label">Operator</span>
-          <span class="write-line"></span>
-        </div>
-        <div class="field">
-          <span class="label">Line / Oven</span>
-          <span class="write-line"></span>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" aria-labelledby="startup-sequence">
-      <h2 class="section-title" id="startup-sequence">Start-up sequence</h2>
-      <div class="steps">
-        <div class="step">
-          <span class="step-number">1</span>
-          <strong>Pre-heat oven</strong>
-          Confirm the oven is pre-heating before production setup begins.
-        </div>
-        <div class="step">
-          <span class="step-number">2</span>
-          <strong>Start required systems</strong>
-          Start Transport, Cooling, and Heating.
-        </div>
-        <div class="step">
-          <span class="step-number">3</span>
-          <strong>Wait for Burner 3</strong>
-          Wait until B3 / Burner 3 Actual Power is under 50% before starting production.
-        </div>
-      </div>
-    </section>
-
     <section class="section" aria-labelledby="daily-checks">
-      <h2 class="section-title" id="daily-checks">Daily checks before production</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Check item</th>
-            <th class="check-cell">OK</th>
-            <th class="check-cell">N/A</th>
-            <th>Comments / action taken</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Pre-start-up calibration completed.</td>
-            <td class="check-cell"><span class="box"></span></td>
-            <td class="check-cell"><span class="box"></span></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Transport, Cooling, and Heating started.</td>
-            <td class="check-cell"><span class="box"></span></td>
-            <td class="check-cell"><span class="box"></span></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>B3 / Burner 3 Actual Power confirmed under 50% before production.</td>
-            <td class="check-cell"><span class="box"></span></td>
-            <td class="check-cell"><span class="box"></span></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Tunnel belt speed set to the current production phase.</td>
-            <td class="check-cell"><span class="box"></span></td>
-            <td class="check-cell"><span class="box"></span></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Hopper spreader speeds set and checked on both sides.</td>
-            <td class="check-cell"><span class="box"></span></td>
-            <td class="check-cell"><span class="box"></span></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Maximum oven temperature limit checked.</td>
-            <td class="check-cell"><span class="box"></span></td>
-            <td class="check-cell"><span class="box"></span></td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
+      <h2 class="section-title" id="daily-checks">Daily checks to remember</h2>
+      <ul class="check-list">
+        <li>Pre-heat the oven before production setup begins.</li>
+        <li>Start Transport, Cooling, and Heating.</li>
+        <li>Wait until B3 / Burner 3 Actual Power is under 50% before starting production.</li>
+        <li>Confirm the tunnel belt speed matches the current phase below.</li>
+        <li>Confirm both hopper spreaders are set to the correct matching speed.</li>
+        <li>Do not allow the oven temperature to exceed 150 C at any time.</li>
+      </ul>
     </section>
 
     <section class="section" aria-labelledby="settings">
-      <h2 class="section-title" id="settings">Production phase settings</h2>
+      <h2 class="section-title" id="settings">Belt and hopper speed settings</h2>
       <table>
         <thead>
           <tr>
             <th>Phase</th>
+            <th>When to use</th>
             <th>Tunnel belt speed</th>
             <th>Hopper spreader speed</th>
-            <th>Confirmed</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>Pre-start-up calibration</strong></td>
-            <td>12 Hz</td>
-            <td>4.2 Hz / 4.2 Hz</td>
-            <td class="check-cell"><span class="box"></span></td>
-          </tr>
-          <tr>
             <td><strong>Granola transition phase</strong><br><span class="muted">Conveyor integration</span></td>
-            <td>14.5 Hz</td>
-            <td>5.3 Hz / 5.3 Hz</td>
-            <td class="check-cell"><span class="box"></span></td>
+            <td>Use when moving into production or after a tunnel belt delay.</td>
+            <td><span class="speed">14.5 Hz</span></td>
+            <td><span class="speed">5.3 Hz / 5.3 Hz</span></td>
           </tr>
           <tr>
             <td><strong>10-minute refinement settings</strong></td>
-            <td>16 Hz</td>
-            <td>6.5 Hz / 6.5 Hz</td>
-            <td class="check-cell"><span class="box"></span></td>
+            <td>Use after the 10-minute point.</td>
+            <td><span class="speed">16 Hz</span></td>
+            <td><span class="speed">6.5 Hz / 6.5 Hz</span></td>
           </tr>
           <tr>
             <td><strong>Advanced 20-minute settings</strong></td>
-            <td>17.2 Hz</td>
-            <td>7.7 Hz / 7.7 Hz</td>
-            <td class="check-cell"><span class="box"></span></td>
+            <td>Use after the 20-minute point.</td>
+            <td><span class="speed">17.2 Hz</span></td>
+            <td><span class="speed">7.7 Hz / 7.7 Hz</span></td>
           </tr>
         </tbody>
       </table>
     </section>
 
-    <section class="section critical" aria-labelledby="critical-limits">
+    <section class="section important-grid" aria-labelledby="important-notes">
       <div>
-        <h2 class="section-title" id="critical-limits">Critical limits</h2>
+        <h2 class="section-title" id="important-notes">Tunnel belt delay</h2>
         <div class="callout">
-          Maximum oven temperature at any time: 150 C.
+          If any interval on the tunnel belt exceeds 5 minutes, revert to the Granola Transition Phase settings:
+          <br><br>
+          Tunnel belt speed <span class="speed">14.5 Hz</span><br>
+          Hopper spreader speed <span class="speed">5.3 Hz / 5.3 Hz</span>
         </div>
       </div>
       <div>
-        <h2 class="section-title">If production is delayed</h2>
+        <h2 class="section-title">Temperature limit</h2>
         <div class="callout">
-          If any interval on the tunnel belt exceeds 5 minutes, revert to the Granola Transition Phase settings.
-        </div>
-      </div>
-    </section>
-
-    <section class="section" aria-labelledby="notes">
-      <h2 class="section-title" id="notes">Notes and follow-up actions</h2>
-      <table>
-        <tbody>
-          <tr><td class="notes"></td></tr>
-          <tr><td class="notes"></td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section class="section" aria-labelledby="signoff">
-      <h2 class="section-title" id="signoff">Sign-off</h2>
-      <div class="signoff-grid">
-        <div class="signature">
-          <span class="label">Completed by</span>
-          <span class="write-line"></span>
-        </div>
-        <div class="signature">
-          <span class="label">Checked by</span>
-          <span class="write-line"></span>
-        </div>
-        <div class="signature">
-          <span class="label">Time completed</span>
-          <span class="write-line"></span>
+          Maximum oven temperature at any time:
+          <br><br>
+          <span class="speed">150 C</span>
         </div>
       </div>
     </section>
 
     <footer>
-      Daily oven start-up checks - keep completed sheets with production records.
+      Daily oven speed reference - read before changing tunnel belt or hopper spreader speeds.
     </footer>
   </main>
 </body>
