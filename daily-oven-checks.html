@@ -3,124 +3,180 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Oven Belt and Hopper Speed Guide</title>
+  <title>Granola Oven Speed Ramp-Up Guide</title>
   <style>
     :root {
-      --ink: #202124;
-      --muted: #5f6368;
-      --line: #d5d9df;
+      --ink: #1f2933;
+      --muted: #5b6673;
+      --line: #d7dde5;
       --soft: #f6f8fb;
-      --accent: #1f5f8b;
-      --accent-soft: #eaf3f8;
-      --note: #fff4df;
-      --note-line: #d98c00;
+      --accent: #155e8b;
+      --accent-dark: #0e4262;
+      --accent-soft: #e9f4fa;
+      --warm: #fff3da;
+      --warm-line: #d58a00;
+      --green: #edf8ef;
+      --green-line: #3f8d50;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      background: #e9edf2;
+      background: #e8edf3;
       color: var(--ink);
       font-family: Arial, Helvetica, sans-serif;
-      font-size: 9.6pt;
-      line-height: 1.28;
+      font-size: 8.9pt;
+      line-height: 1.22;
     }
 
     .page {
       width: 210mm;
       min-height: 297mm;
       margin: 0 auto;
-      padding: 10mm 12mm;
+      padding: 7mm 10mm;
       background: #fff;
     }
 
     header {
-      margin-bottom: 5mm;
-      padding-bottom: 3mm;
-      border-bottom: 2px solid var(--accent);
+      display: grid;
+      grid-template-columns: 1fr 43mm;
+      gap: 5mm;
+      align-items: end;
+      padding-bottom: 2.5mm;
+      border-bottom: 3px solid var(--accent);
     }
 
     h1 {
       margin: 0;
-      color: var(--accent);
-      font-size: 22pt;
+      color: var(--accent-dark);
+      font-size: 19pt;
       line-height: 1.05;
-      letter-spacing: .01em;
     }
 
     .subtitle {
       margin: 1.5mm 0 0;
       color: var(--muted);
-      font-size: 10.5pt;
+      font-size: 9.4pt;
     }
 
-    h2 {
-      margin: 0 0 2mm;
-      color: var(--ink);
-      font-size: 11pt;
-      letter-spacing: .02em;
-      text-transform: uppercase;
+    .key-box {
+      padding: 2.1mm;
+      border-radius: 10px;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .key-box span {
+      display: block;
+      margin-top: .8mm;
+      color: var(--muted);
+      font-size: 7.8pt;
+      font-weight: 600;
     }
 
     .section {
-      margin-top: 4.5mm;
+      margin-top: 3mm;
       break-inside: avoid;
     }
 
-    .speed-table {
-      width: 100%;
-      border-collapse: collapse;
-      border: 1px solid var(--line);
+    h2 {
+      margin: 0 0 1.5mm;
+      color: var(--accent-dark);
+      font-size: 10pt;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .reason {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4mm;
+    }
+
+    .info-card,
+    .delay-card,
+    .temp-card {
+      padding: 2.4mm;
       border-radius: 10px;
+      border: 1px solid var(--line);
+      background: var(--soft);
+    }
+
+    .info-card strong,
+    .delay-card strong,
+    .temp-card strong {
+      display: block;
+      margin-bottom: .6mm;
+      color: var(--accent-dark);
+      font-size: 9.4pt;
+    }
+
+    .ramp-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border: 1px solid var(--line);
+      border-radius: 12px;
       overflow: hidden;
     }
 
-    .speed-table th {
-      padding: 2.5mm 3mm;
+    .ramp-table th {
+      padding: 2mm 2.3mm;
       background: var(--accent);
       color: #fff;
-      font-size: 9pt;
+      font-size: 7.8pt;
       text-align: left;
       text-transform: uppercase;
       letter-spacing: .04em;
     }
 
-    .speed-table td {
-      padding: 3mm;
+    .ramp-table td {
+      padding: 2.1mm;
       border-top: 1px solid var(--line);
       vertical-align: middle;
     }
 
-    .speed-table tbody tr:nth-child(odd) td {
+    .ramp-table tbody tr:nth-child(odd) td {
       background: var(--soft);
     }
 
-    .phase {
-      font-size: 10.5pt;
-      font-weight: 700;
+    .stage {
+      display: grid;
+      grid-template-columns: 9mm 1fr;
+      gap: 2mm;
+      align-items: center;
+      font-weight: 800;
     }
 
-    .phase small {
+    .num {
+      display: grid;
+      place-items: center;
+      width: 8mm;
+      height: 8mm;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 10pt;
+      font-weight: 800;
+    }
+
+    .stage small,
+    .hint {
       display: block;
-      margin-top: 1mm;
+      margin-top: .8mm;
       color: var(--muted);
-      font-size: 8.5pt;
+      font-size: 7.8pt;
       font-weight: 400;
     }
 
     .speed {
-      color: var(--accent);
-      font-size: 15.5pt;
-      font-weight: 800;
+      color: var(--accent-dark);
+      font-size: 13pt;
+      font-weight: 900;
       white-space: nowrap;
-    }
-
-    .hint {
-      color: var(--muted);
-      font-size: 8.5pt;
     }
 
     .notes-grid {
@@ -129,33 +185,16 @@
       gap: 4mm;
     }
 
-    .note {
-      min-height: 26mm;
-      padding: 3mm;
-      border: 1.5px solid var(--note-line);
-      border-left-width: 6px;
-      border-radius: 10px;
-      background: var(--note);
+    .delay-card {
+      border-color: var(--warm-line);
+      border-left: 6px solid var(--warm-line);
+      background: var(--warm);
     }
 
-    .note-title {
-      margin: 0 0 1.5mm;
-      color: #8a4f00;
-      font-size: 10.5pt;
-      font-weight: 800;
-      text-transform: uppercase;
-    }
-
-    .note p {
-      margin: 0;
-    }
-
-    .mini-speeds {
-      margin-top: 2.5mm;
-      display: grid;
-      gap: 1mm;
-      font-size: 10pt;
-      font-weight: 700;
+    .temp-card {
+      border-color: var(--green-line);
+      border-left: 6px solid var(--green-line);
+      background: var(--green);
     }
 
     .checks {
@@ -163,44 +202,29 @@
       padding: 0;
       list-style: none;
       border: 1px solid var(--line);
-      border-radius: 10px;
+      border-radius: 12px;
       overflow: hidden;
     }
 
     .checks li {
       display: grid;
       grid-template-columns: 7mm 1fr;
-      gap: 2.5mm;
+      gap: 2.3mm;
       padding: 2.2mm 3mm;
       border-top: 1px solid var(--line);
       background: #fff;
     }
 
-    .checks li:first-child {
-      border-top: 0;
-    }
+    .checks li:first-child { border-top: 0; }
+    .checks li:nth-child(even) { background: var(--soft); }
 
-    .checks li:nth-child(even) {
-      background: var(--soft);
-    }
-
-    .bullet {
+    .dot {
       width: 5mm;
       height: 5mm;
-      margin-top: .6mm;
-      border: 1.5px solid var(--accent);
+      margin-top: .5mm;
+      border: 1.6px solid var(--accent);
       border-radius: 50%;
       background: var(--accent-soft);
-    }
-
-    .plain-note {
-      padding: 3mm;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      background: var(--accent-soft);
-      color: var(--ink);
-      font-size: 10pt;
-      font-weight: 700;
     }
 
     footer {
@@ -208,41 +232,48 @@
       padding-top: 2mm;
       border-top: 1px solid var(--line);
       color: var(--muted);
-      font-size: 8.5pt;
+      font-size: 7.8pt;
       text-align: center;
     }
 
-    @page {
-      size: A4;
-      margin: 0;
-    }
+    @page { size: A4; margin: 0; }
 
     @media print {
-      body {
-        background: #fff;
-      }
-
-      .page {
-        width: auto;
-        min-height: 0;
-        margin: 0;
-      }
+      body { background: #fff; }
+      .page { width: auto; min-height: 0; margin: 0; }
     }
   </style>
 </head>
 <body>
   <main class="page">
     <header>
-      <h1>Oven Belt and Hopper Speed Guide</h1>
-      <p class="subtitle">Quick daily reference for changing tunnel belt and hopper spreader speeds.</p>
+      <div>
+        <h1>Granola Oven Speed Guide</h1>
+        <p class="subtitle">Quick daily reference for tunnel belt and hopper spreader speed changes.</p>
+      </div>
+      <div class="key-box">
+        Start slow<br>increase gradually
+        <span>Helps control finished granola moisture</span>
+      </div>
     </header>
 
-    <section class="section" aria-labelledby="settings">
-      <h2 id="settings">Speed settings</h2>
-      <table class="speed-table">
+    <section class="section reason" aria-label="Process notes">
+      <div class="info-card">
+        <strong>Why the slow start matters</strong>
+        Starting too fast can leave granola too high in moisture. Begin slowly so the product has enough time in the oven.
+      </div>
+      <div class="info-card">
+        <strong>Hopper spreader</strong>
+        Drops granola onto the oven belt. Keep both sides matched to the speed shown in the guide.
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="ramp-up">
+      <h2 id="ramp-up">Speed ramp-up sequence</h2>
+      <table class="ramp-table">
         <thead>
           <tr>
-            <th>Phase</th>
+            <th>Step</th>
             <th>When to use</th>
             <th>Tunnel belt</th>
             <th>Hopper spreader</th>
@@ -250,38 +281,51 @@
         </thead>
         <tbody>
           <tr>
-            <td class="phase">Granola Transition Phase<small>Conveyor integration</small></td>
-            <td>Use when moving into production or after a tunnel belt delay.</td>
+            <td>
+              <div class="stage"><span class="num">1</span><span>Gentle Start<small>Initial oven loading</small></span></div>
+            </td>
+            <td>Use at start-up while granola begins travelling through the oven.</td>
+            <td><span class="speed">12 Hz</span></td>
+            <td><span class="speed">4.2 Hz / 4.2 Hz</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="stage"><span class="num">2</span><span>Kibbler Transition<small>First granola exits oven</small></span></div>
+            </td>
+            <td>When granola comes out of the oven and drops to the kibbler, increase speed.</td>
             <td><span class="speed">14.5 Hz</span></td>
             <td><span class="speed">5.3 Hz / 5.3 Hz</span></td>
           </tr>
           <tr>
-            <td class="phase">10-Minute Refinement</td>
-            <td>Use after the 10-minute point.</td>
+            <td>
+              <div class="stage"><span class="num">3</span><span>10-Minute Increase<small>After kibbler transition</small></span></div>
+            </td>
+            <td>After 10 minutes at the kibbler transition setting.</td>
             <td><span class="speed">16 Hz</span></td>
             <td><span class="speed">6.5 Hz / 6.5 Hz</span></td>
           </tr>
           <tr>
-            <td class="phase">Advanced 20-Minute Settings</td>
-            <td>Use after the 20-minute point.</td>
+            <td>
+              <div class="stage"><span class="num">4</span><span>20-Minute Running Speed<small>Final ramp step</small></span></div>
+            </td>
+            <td>After another 10 minutes, use final running speed.</td>
             <td><span class="speed">17.2 Hz</span></td>
             <td><span class="speed">7.7 Hz / 7.7 Hz</span></td>
           </tr>
         </tbody>
       </table>
-      <p class="hint">Hopper spreader values show left and right side settings.</p>
+      <span class="hint">Hopper spreader values show left side / right side settings.</span>
     </section>
 
-    <section class="section notes-grid" aria-labelledby="belt-delay">
-      <div class="note">
-        <div class="note-title" id="belt-delay">Tunnel belt delay</div>
-        <p>If any interval on the tunnel belt exceeds 5 minutes, revert to the Granola Transition Phase settings.</p>
-        <div class="mini-speeds">
-          <div>Tunnel belt: <span class="speed">14.5 Hz</span></div>
-          <div>Hopper spreader: <span class="speed">5.3 Hz / 5.3 Hz</span></div>
-        </div>
+    <section class="section notes-grid" aria-label="Important notes">
+      <div class="delay-card">
+        <strong>Tunnel belt delay</strong>
+        If any interval on the tunnel belt exceeds 5 minutes, revert to the Kibbler Transition setting:<br><br>
+        Tunnel belt <span class="speed">14.5 Hz</span><br>
+        Hopper spreader <span class="speed">5.3 Hz / 5.3 Hz</span>
       </div>
-      <div class="plain-note">
+      <div class="temp-card">
+        <strong>Temperature limit</strong>
         Maximum oven temperature at any time:<br><br>
         <span class="speed">150 C</span>
       </div>
@@ -290,17 +334,17 @@
     <section class="section" aria-labelledby="daily-checks">
       <h2 id="daily-checks">Daily checks to remember</h2>
       <ul class="checks">
-        <li><span class="bullet"></span><span>Pre-heat the oven before production setup begins.</span></li>
-        <li><span class="bullet"></span><span>Start Transport, Cooling, and Heating.</span></li>
-        <li><span class="bullet"></span><span>Wait until B3 / Burner 3 Actual Power is under 50% before starting production.</span></li>
-        <li><span class="bullet"></span><span>Confirm the tunnel belt speed matches the current phase.</span></li>
-        <li><span class="bullet"></span><span>Confirm both hopper spreaders are set to the matching speed.</span></li>
-        <li><span class="bullet"></span><span>Keep the oven temperature at or below 150 C.</span></li>
+        <li><span class="dot"></span><span>Pre-heat the oven before production setup begins.</span></li>
+        <li><span class="dot"></span><span>Start Transport, Cooling, and Heating.</span></li>
+        <li><span class="dot"></span><span>Wait until B3 / Burner 3 Actual Power is under 50% before starting production.</span></li>
+        <li><span class="dot"></span><span>Start with the Gentle Start setting: 12 Hz belt and 4.2 Hz / 4.2 Hz hopper spreader.</span></li>
+        <li><span class="dot"></span><span>When granola reaches the kibbler, follow the 10-minute ramp-up sequence.</span></li>
+        <li><span class="dot"></span><span>Keep the oven temperature at or below 150 C.</span></li>
       </ul>
     </section>
 
     <footer>
-      Oven speed reference - read before changing tunnel belt or hopper spreader speeds.
+      Granola oven speed guide - read before changing tunnel belt or hopper spreader speeds.
     </footer>
   </main>
 </body>
