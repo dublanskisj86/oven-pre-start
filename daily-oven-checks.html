@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Daily Oven Start-Up Checks</title>
+  <style>
+    :root {
+      --ink: #1e293b;
+      --muted: #64748b;
+      --line: #cbd5e1;
+      --soft: #f8fafc;
+      --panel: #eef6ff;
+      --accent: #145c9e;
+      --warning: #fff7ed;
+      --warning-line: #fb923c;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #e2e8f0;
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 10.5pt;
+      line-height: 1.35;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      padding: 12mm;
+      background: #fff;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: 1fr 42mm;
+      gap: 8mm;
+      align-items: stretch;
+      margin-bottom: 6mm;
+      border-bottom: 3px solid var(--accent);
+      padding-bottom: 5mm;
+    }
+
+    h1 {
+      margin: 0 0 2mm;
+      color: var(--accent);
+      font-size: 24pt;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 11pt;
+      font-weight: 700;
+    }
+
+    .status-card {
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      border: 2px solid var(--accent);
+      border-radius: 10px;
+      padding: 4mm;
+      text-align: center;
+    }
+
+    .status-card strong {
+      display: block;
+      color: var(--accent);
+      font-size: 12pt;
+      text-transform: uppercase;
+    }
+
+    .status-card span {
+      color: var(--muted);
+      font-size: 8.5pt;
+    }
+
+    .section {
+      margin-top: 5mm;
+      break-inside: avoid;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 2mm;
+      margin: 0 0 2.5mm;
+      color: var(--accent);
+      font-size: 12pt;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .section-title::before {
+      content: "";
+      width: 4mm;
+      height: 4mm;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      border: 1px solid var(--line);
+      padding: 2.4mm 2.8mm;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--panel);
+      color: var(--accent);
+      font-size: 9pt;
+      text-align: left;
+      text-transform: uppercase;
+      letter-spacing: .03em;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid var(--line);
+      border-bottom: 0;
+    }
+
+    .field {
+      min-height: 17mm;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 2mm 2.4mm;
+    }
+
+    .field:nth-child(4n) {
+      border-right: 0;
+    }
+
+    .label {
+      display: block;
+      margin-bottom: 5mm;
+      color: var(--muted);
+      font-size: 8pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .write-line {
+      display: block;
+      height: 1px;
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3mm;
+      margin-top: 2mm;
+    }
+
+    .step {
+      min-height: 28mm;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 3mm;
+      background: var(--soft);
+    }
+
+    .step-number {
+      display: inline-grid;
+      place-items: center;
+      width: 7mm;
+      height: 7mm;
+      margin-bottom: 2mm;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .step strong {
+      display: block;
+      margin-bottom: 1mm;
+      font-size: 10.5pt;
+    }
+
+    .check-cell {
+      width: 15mm;
+      text-align: center;
+    }
+
+    .box {
+      display: inline-block;
+      width: 5mm;
+      height: 5mm;
+      border: 1.8px solid var(--ink);
+      border-radius: 1mm;
+      vertical-align: middle;
+    }
+
+    .notes {
+      min-height: 20mm;
+    }
+
+    .critical {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3mm;
+    }
+
+    .callout {
+      border: 1.5px solid var(--warning-line);
+      border-left-width: 5px;
+      border-radius: 8px;
+      padding: 3mm;
+      background: var(--warning);
+      font-weight: 700;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 9pt;
+      font-weight: 400;
+    }
+
+    .signoff-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 3mm;
+      margin-top: 2mm;
+    }
+
+    .signature {
+      min-height: 19mm;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 2.5mm;
+    }
+
+    footer {
+      margin-top: 5mm;
+      padding-top: 2.5mm;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 8pt;
+      text-align: center;
+    }
+
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .page {
+        width: auto;
+        min-height: 0;
+        margin: 0;
+        padding: 10mm;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <div>
+        <h1>Daily Oven Start-Up Checks</h1>
+        <p class="subtitle">Pre-heat, start-up sequence, speed settings, and sign-off record</p>
+      </div>
+      <div class="status-card">
+        <strong>Print Daily</strong>
+        <span>Complete before production starts</span>
+      </div>
+    </header>
+
+    <section class="section" aria-labelledby="shift-details">
+      <h2 class="section-title" id="shift-details">Shift details</h2>
+      <div class="info-grid">
+        <div class="field">
+          <span class="label">Date</span>
+          <span class="write-line"></span>
+        </div>
+        <div class="field">
+          <span class="label">Shift</span>
+          <span class="write-line"></span>
+        </div>
+        <div class="field">
+          <span class="label">Operator</span>
+          <span class="write-line"></span>
+        </div>
+        <div class="field">
+          <span class="label">Line / Oven</span>
+          <span class="write-line"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="startup-sequence">
+      <h2 class="section-title" id="startup-sequence">Start-up sequence</h2>
+      <div class="steps">
+        <div class="step">
+          <span class="step-number">1</span>
+          <strong>Pre-heat oven</strong>
+          Confirm the oven is pre-heating before production setup begins.
+        </div>
+        <div class="step">
+          <span class="step-number">2</span>
+          <strong>Start required systems</strong>
+          Start Transport, Cooling, and Heating.
+        </div>
+        <div class="step">
+          <span class="step-number">3</span>
+          <strong>Wait for Burner 3</strong>
+          Wait until B3 / Burner 3 Actual Power is under 50% before starting production.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="daily-checks">
+      <h2 class="section-title" id="daily-checks">Daily checks before production</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Check item</th>
+            <th class="check-cell">OK</th>
+            <th class="check-cell">N/A</th>
+            <th>Comments / action taken</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Pre-start-up calibration completed.</td>
+            <td class="check-cell"><span class="box"></span></td>
+            <td class="check-cell"><span class="box"></span></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Transport, Cooling, and Heating started.</td>
+            <td class="check-cell"><span class="box"></span></td>
+            <td class="check-cell"><span class="box"></span></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>B3 / Burner 3 Actual Power confirmed under 50% before production.</td>
+            <td class="check-cell"><span class="box"></span></td>
+            <td class="check-cell"><span class="box"></span></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Tunnel belt speed set to the current production phase.</td>
+            <td class="check-cell"><span class="box"></span></td>
+            <td class="check-cell"><span class="box"></span></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Hopper spreader speeds set and checked on both sides.</td>
+            <td class="check-cell"><span class="box"></span></td>
+            <td class="check-cell"><span class="box"></span></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Maximum oven temperature limit checked.</td>
+            <td class="check-cell"><span class="box"></span></td>
+            <td class="check-cell"><span class="box"></span></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section" aria-labelledby="settings">
+      <h2 class="section-title" id="settings">Production phase settings</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Phase</th>
+            <th>Tunnel belt speed</th>
+            <th>Hopper spreader speed</th>
+            <th>Confirmed</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Pre-start-up calibration</strong></td>
+            <td>12 Hz</td>
+            <td>4.2 Hz / 4.2 Hz</td>
+            <td class="check-cell"><span class="box"></span></td>
+          </tr>
+          <tr>
+            <td><strong>Granola transition phase</strong><br><span class="muted">Conveyor integration</span></td>
+            <td>14.5 Hz</td>
+            <td>5.3 Hz / 5.3 Hz</td>
+            <td class="check-cell"><span class="box"></span></td>
+          </tr>
+          <tr>
+            <td><strong>10-minute refinement settings</strong></td>
+            <td>16 Hz</td>
+            <td>6.5 Hz / 6.5 Hz</td>
+            <td class="check-cell"><span class="box"></span></td>
+          </tr>
+          <tr>
+            <td><strong>Advanced 20-minute settings</strong></td>
+            <td>17.2 Hz</td>
+            <td>7.7 Hz / 7.7 Hz</td>
+            <td class="check-cell"><span class="box"></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section critical" aria-labelledby="critical-limits">
+      <div>
+        <h2 class="section-title" id="critical-limits">Critical limits</h2>
+        <div class="callout">
+          Maximum oven temperature at any time: 150 C.
+        </div>
+      </div>
+      <div>
+        <h2 class="section-title">If production is delayed</h2>
+        <div class="callout">
+          If any interval on the tunnel belt exceeds 5 minutes, revert to the Granola Transition Phase settings.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="notes">
+      <h2 class="section-title" id="notes">Notes and follow-up actions</h2>
+      <table>
+        <tbody>
+          <tr><td class="notes"></td></tr>
+          <tr><td class="notes"></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section" aria-labelledby="signoff">
+      <h2 class="section-title" id="signoff">Sign-off</h2>
+      <div class="signoff-grid">
+        <div class="signature">
+          <span class="label">Completed by</span>
+          <span class="write-line"></span>
+        </div>
+        <div class="signature">
+          <span class="label">Checked by</span>
+          <span class="write-line"></span>
+        </div>
+        <div class="signature">
+          <span class="label">Time completed</span>
+          <span class="write-line"></span>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      Daily oven start-up checks - keep completed sheets with production records.
+    </footer>
+  </main>
+</body>
+</html>
