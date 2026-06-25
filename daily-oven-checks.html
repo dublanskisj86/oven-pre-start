@@ -3,17 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Daily Oven Start-Up Checks</title>
+  <title>Oven Belt and Hopper Speed Guide</title>
   <style>
     :root {
-      --ink: #1e293b;
-      --muted: #64748b;
-      --line: #cbd5e1;
-      --soft: #f8fafc;
-      --panel: #eef6ff;
-      --accent: #145c9e;
-      --warning: #fff7ed;
-      --warning-line: #fb923c;
+      --ink: #202124;
+      --muted: #5f6368;
+      --line: #d5d9df;
+      --soft: #f6f8fb;
+      --accent: #1f5f8b;
+      --accent-soft: #eaf3f8;
+      --note: #fff4df;
+      --note-line: #d98c00;
     }
 
     * {
@@ -22,280 +22,193 @@
 
     body {
       margin: 0;
-      background: #e2e8f0;
+      background: #e9edf2;
       color: var(--ink);
       font-family: Arial, Helvetica, sans-serif;
-      font-size: 9.4pt;
-      line-height: 1.22;
+      font-size: 9.6pt;
+      line-height: 1.28;
     }
 
     .page {
       width: 210mm;
       min-height: 297mm;
       margin: 0 auto;
-      padding: 8mm;
+      padding: 10mm 12mm;
       background: #fff;
     }
 
     header {
-      display: grid;
-      grid-template-columns: 1fr 38mm;
-      gap: 6mm;
-      align-items: stretch;
-      margin-bottom: 4mm;
-      border-bottom: 3px solid var(--accent);
-      padding-bottom: 3.5mm;
+      margin-bottom: 5mm;
+      padding-bottom: 3mm;
+      border-bottom: 2px solid var(--accent);
     }
 
     h1 {
-      margin: 0 0 1mm;
+      margin: 0;
       color: var(--accent);
-      font-size: 20pt;
+      font-size: 22pt;
+      line-height: 1.05;
+      letter-spacing: .01em;
+    }
+
+    .subtitle {
+      margin: 1.5mm 0 0;
+      color: var(--muted);
+      font-size: 10.5pt;
+    }
+
+    h2 {
+      margin: 0 0 2mm;
+      color: var(--ink);
+      font-size: 11pt;
       letter-spacing: .02em;
       text-transform: uppercase;
     }
 
-    .subtitle {
-      margin: 0;
-      color: var(--muted);
-      font-size: 10pt;
-      font-weight: 700;
-    }
-
-    .status-card {
-      display: grid;
-      align-content: center;
-      justify-items: center;
-      border: 2px solid var(--accent);
-      border-radius: 10px;
-      padding: 3mm;
-      text-align: center;
-    }
-
-    .status-card strong {
-      display: block;
-      color: var(--accent);
-      font-size: 10.5pt;
-      text-transform: uppercase;
-    }
-
-    .status-card span {
-      color: var(--muted);
-      font-size: 8.5pt;
-    }
-
     .section {
-      margin-top: 3mm;
+      margin-top: 4.5mm;
       break-inside: avoid;
     }
 
-    .section-title {
-      display: flex;
-      align-items: center;
-      gap: 2mm;
-      margin: 0 0 1.8mm;
-      color: var(--accent);
-      font-size: 10.5pt;
+    .speed-table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .speed-table th {
+      padding: 2.5mm 3mm;
+      background: var(--accent);
+      color: #fff;
+      font-size: 9pt;
+      text-align: left;
       text-transform: uppercase;
       letter-spacing: .04em;
     }
 
-    .section-title::before {
-      content: "";
-      width: 4mm;
-      height: 4mm;
-      border-radius: 50%;
-      background: var(--accent);
+    .speed-table td {
+      padding: 3mm;
+      border-top: 1px solid var(--line);
+      vertical-align: middle;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    th,
-    td {
-      border: 1px solid var(--line);
-      padding: 1.65mm 2.1mm;
-      vertical-align: top;
-    }
-
-    th {
-      background: var(--panel);
-      color: var(--accent);
-      font-size: 9pt;
-      text-align: left;
-      text-transform: uppercase;
-      letter-spacing: .03em;
-    }
-
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      border: 1px solid var(--line);
-      border-bottom: 0;
-    }
-
-    .field {
-      min-height: 13mm;
-      border-right: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      padding: 2mm 2.4mm;
-    }
-
-    .field:nth-child(4n) {
-      border-right: 0;
-    }
-
-    .label {
-      display: block;
-      margin-bottom: 3.5mm;
-      color: var(--muted);
-      font-size: 8pt;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .05em;
-    }
-
-    .write-line {
-      display: block;
-      height: 1px;
-      border-bottom: 1px solid var(--ink);
-    }
-
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2.4mm;
-      margin-top: 1.5mm;
-    }
-
-    .step {
-      min-height: 20mm;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 2.2mm;
+    .speed-table tbody tr:nth-child(odd) td {
       background: var(--soft);
     }
 
-    .step-number {
-      display: inline-grid;
-      place-items: center;
-      width: 7mm;
-      height: 7mm;
-      margin-bottom: 1mm;
-      border-radius: 50%;
-      background: var(--accent);
-      color: #fff;
-      font-weight: 700;
-    }
-
-    .step strong {
-      display: block;
-      margin-bottom: .7mm;
+    .phase {
       font-size: 10.5pt;
+      font-weight: 700;
     }
 
-    .check-list {
-      display: grid;
-      gap: 2mm;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .check-list li {
-      position: relative;
-      min-height: 10mm;
-      padding: 2.2mm 3mm 2.2mm 10mm;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--soft);
-    }
-
-    .check-list li::before {
-      content: "";
-      position: absolute;
-      left: 3mm;
-      top: 3mm;
-      width: 3.5mm;
-      height: 3.5mm;
-      border-radius: 50%;
-      background: var(--accent);
+    .phase small {
+      display: block;
+      margin-top: 1mm;
+      color: var(--muted);
+      font-size: 8.5pt;
+      font-weight: 400;
     }
 
     .speed {
       color: var(--accent);
-      font-size: 13pt;
+      font-size: 15.5pt;
       font-weight: 800;
       white-space: nowrap;
     }
 
-    .check-cell {
-      width: 15mm;
-      text-align: center;
+    .hint {
+      color: var(--muted);
+      font-size: 8.5pt;
     }
 
-    .box {
-      display: inline-block;
-      width: 5mm;
-      height: 5mm;
-      border: 1.8px solid var(--ink);
-      border-radius: 1mm;
-      vertical-align: middle;
-    }
-
-    .notes {
-      min-height: 12mm;
-    }
-
-    .critical {
+    .notes-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2.4mm;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 4mm;
     }
 
-    .callout {
-      border: 1.5px solid var(--warning-line);
-      border-left-width: 5px;
-      border-radius: 8px;
-      padding: 2.2mm;
-      background: var(--warning);
+    .note {
+      min-height: 26mm;
+      padding: 3mm;
+      border: 1.5px solid var(--note-line);
+      border-left-width: 6px;
+      border-radius: 10px;
+      background: var(--note);
+    }
+
+    .note-title {
+      margin: 0 0 1.5mm;
+      color: #8a4f00;
+      font-size: 10.5pt;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .note p {
+      margin: 0;
+    }
+
+    .mini-speeds {
+      margin-top: 2.5mm;
+      display: grid;
+      gap: 1mm;
+      font-size: 10pt;
       font-weight: 700;
     }
 
-    .muted {
-      color: var(--muted);
-      font-size: 9pt;
-      font-weight: 400;
-    }
-
-    .important-grid {
-      display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 3mm;
-    }
-
-    .signoff-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 2.4mm;
-      margin-top: 1.5mm;
-    }
-
-    .signature {
-      min-height: 14mm;
+    .checks {
+      margin: 0;
+      padding: 0;
+      list-style: none;
       border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 2mm;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .checks li {
+      display: grid;
+      grid-template-columns: 7mm 1fr;
+      gap: 2.5mm;
+      padding: 2.2mm 3mm;
+      border-top: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .checks li:first-child {
+      border-top: 0;
+    }
+
+    .checks li:nth-child(even) {
+      background: var(--soft);
+    }
+
+    .bullet {
+      width: 5mm;
+      height: 5mm;
+      margin-top: .6mm;
+      border: 1.5px solid var(--accent);
+      border-radius: 50%;
+      background: var(--accent-soft);
+    }
+
+    .plain-note {
+      padding: 3mm;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--accent-soft);
+      color: var(--ink);
+      font-size: 10pt;
+      font-weight: 700;
     }
 
     footer {
-      margin-top: 3mm;
-      padding-top: 1.5mm;
+      margin-top: 4mm;
+      padding-top: 2mm;
       border-top: 1px solid var(--line);
       color: var(--muted);
-      font-size: 8pt;
+      font-size: 8.5pt;
       text-align: center;
     }
 
@@ -313,7 +226,6 @@
         width: auto;
         min-height: 0;
         margin: 0;
-        padding: 8mm;
       }
     }
   </style>
@@ -321,84 +233,74 @@
 <body>
   <main class="page">
     <header>
-      <div>
-        <h1>Oven Speed Reference</h1>
-        <p class="subtitle">Daily checks and settings to review when changing oven belt and hopper speeds</p>
-      </div>
-      <div class="status-card">
-        <strong>Daily Checks</strong>
-        <span>Read before speed changes</span>
-      </div>
+      <h1>Oven Belt and Hopper Speed Guide</h1>
+      <p class="subtitle">Quick daily reference for changing tunnel belt and hopper spreader speeds.</p>
     </header>
 
-    <section class="section" aria-labelledby="daily-checks">
-      <h2 class="section-title" id="daily-checks">Daily checks to remember</h2>
-      <ul class="check-list">
-        <li>Pre-heat the oven before production setup begins.</li>
-        <li>Start Transport, Cooling, and Heating.</li>
-        <li>Wait until B3 / Burner 3 Actual Power is under 50% before starting production.</li>
-        <li>Confirm the tunnel belt speed matches the current phase below.</li>
-        <li>Confirm both hopper spreaders are set to the correct matching speed.</li>
-        <li>Do not allow the oven temperature to exceed 150 C at any time.</li>
-      </ul>
-    </section>
-
     <section class="section" aria-labelledby="settings">
-      <h2 class="section-title" id="settings">Belt and hopper speed settings</h2>
-      <table>
+      <h2 id="settings">Speed settings</h2>
+      <table class="speed-table">
         <thead>
           <tr>
             <th>Phase</th>
             <th>When to use</th>
-            <th>Tunnel belt speed</th>
-            <th>Hopper spreader speed</th>
+            <th>Tunnel belt</th>
+            <th>Hopper spreader</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>Granola transition phase</strong><br><span class="muted">Conveyor integration</span></td>
+            <td class="phase">Granola Transition Phase<small>Conveyor integration</small></td>
             <td>Use when moving into production or after a tunnel belt delay.</td>
             <td><span class="speed">14.5 Hz</span></td>
             <td><span class="speed">5.3 Hz / 5.3 Hz</span></td>
           </tr>
           <tr>
-            <td><strong>10-minute refinement settings</strong></td>
+            <td class="phase">10-Minute Refinement</td>
             <td>Use after the 10-minute point.</td>
             <td><span class="speed">16 Hz</span></td>
             <td><span class="speed">6.5 Hz / 6.5 Hz</span></td>
           </tr>
           <tr>
-            <td><strong>Advanced 20-minute settings</strong></td>
+            <td class="phase">Advanced 20-Minute Settings</td>
             <td>Use after the 20-minute point.</td>
             <td><span class="speed">17.2 Hz</span></td>
             <td><span class="speed">7.7 Hz / 7.7 Hz</span></td>
           </tr>
         </tbody>
       </table>
+      <p class="hint">Hopper spreader values show left and right side settings.</p>
     </section>
 
-    <section class="section important-grid" aria-labelledby="important-notes">
-      <div>
-        <h2 class="section-title" id="important-notes">Tunnel belt delay</h2>
-        <div class="callout">
-          If any interval on the tunnel belt exceeds 5 minutes, revert to the Granola Transition Phase settings:
-          <br><br>
-          Tunnel belt speed <span class="speed">14.5 Hz</span><br>
-          Hopper spreader speed <span class="speed">5.3 Hz / 5.3 Hz</span>
+    <section class="section notes-grid" aria-labelledby="belt-delay">
+      <div class="note">
+        <div class="note-title" id="belt-delay">Tunnel belt delay</div>
+        <p>If any interval on the tunnel belt exceeds 5 minutes, revert to the Granola Transition Phase settings.</p>
+        <div class="mini-speeds">
+          <div>Tunnel belt: <span class="speed">14.5 Hz</span></div>
+          <div>Hopper spreader: <span class="speed">5.3 Hz / 5.3 Hz</span></div>
         </div>
       </div>
-      <div>
-        <h2 class="section-title">Temperature limit</h2>
-        <div class="callout">
-          Maximum oven temperature at any time:
-          <br><br>
-          <span class="speed">150 C</span>
-        </div>
+      <div class="plain-note">
+        Maximum oven temperature at any time:<br><br>
+        <span class="speed">150 C</span>
       </div>
+    </section>
+
+    <section class="section" aria-labelledby="daily-checks">
+      <h2 id="daily-checks">Daily checks to remember</h2>
+      <ul class="checks">
+        <li><span class="bullet"></span><span>Pre-heat the oven before production setup begins.</span></li>
+        <li><span class="bullet"></span><span>Start Transport, Cooling, and Heating.</span></li>
+        <li><span class="bullet"></span><span>Wait until B3 / Burner 3 Actual Power is under 50% before starting production.</span></li>
+        <li><span class="bullet"></span><span>Confirm the tunnel belt speed matches the current phase.</span></li>
+        <li><span class="bullet"></span><span>Confirm both hopper spreaders are set to the matching speed.</span></li>
+        <li><span class="bullet"></span><span>Keep the oven temperature at or below 150 C.</span></li>
+      </ul>
     </section>
 
     <footer>
-      Daily oven speed reference - read before changing tunnel belt or hopper spreader speeds.
+      Oven speed reference - read before changing tunnel belt or hopper spreader speeds.
     </footer>
   </main>
 </body>
