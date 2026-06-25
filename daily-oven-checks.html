@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Granola Oven Speed Ramp-Up Guide</title>
+  <style>
+    :root {
+      --ink: #1f2933;
+      --muted: #5b6673;
+      --line: #d7dde5;
+      --soft: #f6f8fb;
+      --paper: #ffffff;
+      --accent: #155e8b;
+      --accent-dark: #0e4262;
+      --accent-soft: #e9f4fa;
+      --accent-pale: #f4f9fc;
+      --warm: #fff3da;
+      --warm-line: #d58a00;
+      --green: #edf8ef;
+      --green-line: #3f8d50;
+      --shadow: 0 1.5mm 5mm rgba(20, 42, 65, .10);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #e8edf3;
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 8.9pt;
+      line-height: 1.22;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      padding: 7mm 10mm;
+      background:
+        linear-gradient(180deg, #f7fbfe 0, #fff 28mm);
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: 1fr 43mm;
+      gap: 5mm;
+      align-items: center;
+      padding: 5mm;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent-dark), var(--accent));
+      box-shadow: var(--shadow);
+    }
+
+    h1 {
+      margin: 0;
+      color: #fff;
+      font-size: 19pt;
+      line-height: 1.05;
+    }
+
+    .subtitle {
+      margin: 1.5mm 0 0;
+      color: #dbeefa;
+      font-size: 9.4pt;
+    }
+
+    .key-box {
+      padding: 2.1mm;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, .94);
+      color: var(--accent-dark);
+      font-weight: 800;
+      text-align: center;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .7);
+    }
+
+    .key-box span {
+      display: block;
+      margin-top: .8mm;
+      color: var(--muted);
+      font-size: 7.8pt;
+      font-weight: 600;
+    }
+
+    .section {
+      margin-top: 3mm;
+      break-inside: avoid;
+    }
+
+    h2 {
+      margin: 0 0 1.5mm;
+      color: var(--accent-dark);
+      font-size: 10pt;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      display: flex;
+      align-items: center;
+      gap: 2mm;
+    }
+
+    h2::before {
+      content: "";
+      width: 5mm;
+      height: 1.2mm;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .reason {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3mm;
+    }
+
+    .info-card,
+    .delay-card,
+    .temp-card {
+      padding: 2.4mm;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      box-shadow: 0 .8mm 2.5mm rgba(31, 41, 51, .06);
+    }
+
+    .info-card strong,
+    .delay-card strong,
+    .temp-card strong {
+      display: block;
+      margin-bottom: .6mm;
+      color: var(--accent-dark);
+      font-size: 9.4pt;
+    }
+
+    .ramp-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .ramp-table th {
+      padding: 2mm 2.3mm;
+      background: var(--accent-dark);
+      color: #fff;
+      font-size: 7.8pt;
+      text-align: left;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .ramp-table td {
+      padding: 2.1mm;
+      border-top: 1px solid var(--line);
+      vertical-align: middle;
+    }
+
+    .ramp-table tbody tr:nth-child(odd) td {
+      background: var(--accent-pale);
+    }
+
+    .ramp-table tbody tr:hover td {
+      background: var(--accent-soft);
+    }
+
+    .ramp-table td:nth-child(3),
+    .ramp-table td:nth-child(4) {
+      text-align: center;
+    }
+
+    .stage {
+      display: grid;
+      grid-template-columns: 9mm 1fr;
+      gap: 2mm;
+      align-items: center;
+      font-weight: 800;
+    }
+
+    .num {
+      display: grid;
+      place-items: center;
+      width: 8mm;
+      height: 8mm;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #2782b3);
+      color: #fff;
+      font-size: 10pt;
+      font-weight: 800;
+      box-shadow: 0 .5mm 1.5mm rgba(14, 66, 98, .25);
+    }
+
+    .stage small,
+    .hint {
+      display: block;
+      margin-top: .8mm;
+      color: var(--muted);
+      font-size: 7.8pt;
+      font-weight: 400;
+    }
+
+    .speed {
+      display: inline-block;
+      padding: .8mm 1.6mm;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid #cfe2ef;
+      color: var(--accent-dark);
+      font-size: 12.2pt;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .notes-grid {
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 4mm;
+    }
+
+    .delay-card {
+      border-color: var(--warm-line);
+      border-left: 6px solid var(--warm-line);
+      background: var(--warm);
+      box-shadow: 0 .8mm 2.5mm rgba(213, 138, 0, .12);
+    }
+
+    .temp-card {
+      border-color: var(--green-line);
+      border-left: 6px solid var(--green-line);
+      background: var(--green);
+      box-shadow: 0 .8mm 2.5mm rgba(63, 141, 80, .12);
+    }
+
+    .checks {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--paper);
+      box-shadow: 0 .8mm 2.5mm rgba(31, 41, 51, .06);
+    }
+
+    .checks li {
+      display: grid;
+      grid-template-columns: 7mm 1fr;
+      gap: 2.3mm;
+      padding: 2.2mm 3mm;
+      border-top: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .checks li:first-child { border-top: 0; }
+    .checks li:nth-child(even) { background: var(--soft); }
+
+    .dot {
+      width: 5mm;
+      height: 5mm;
+      margin-top: .5mm;
+      border: 1.6px solid var(--accent);
+      border-radius: 50%;
+      background: radial-gradient(circle at center, #fff 0 35%, var(--accent-soft) 36%);
+    }
+
+    footer {
+      margin-top: 4mm;
+      padding-top: 2mm;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 7.8pt;
+      text-align: center;
+    }
+
+    @page { size: A4; margin: 0; }
+
+    @media print {
+      body { background: #fff; }
+      .page { width: auto; min-height: 0; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <div>
+        <h1>Granola Oven Speed Guide</h1>
+        <p class="subtitle">Quick daily reference for tunnel belt and hopper spreader speed changes.</p>
+      </div>
+      <div class="key-box">
+        Start slow<br>increase gradually
+        <span>Helps control finished granola moisture</span>
+      </div>
+    </header>
+
+    <section class="section reason" aria-label="Process notes">
+      <div class="info-card">
+        <strong>Why the slow start matters</strong>
+        Starting too fast can leave granola too high in moisture. Begin slowly so the product has enough time in the oven.
+      </div>
+      <div class="info-card">
+        <strong>Hopper spreader</strong>
+        Drops granola onto the oven belt. Keep both sides matched to the speed shown in the guide.
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="ramp-up">
+      <h2 id="ramp-up">Speed ramp-up sequence</h2>
+      <table class="ramp-table">
+        <thead>
+          <tr>
+            <th>Step</th>
+            <th>When to use</th>
+            <th>Tunnel belt</th>
+            <th>Hopper spreader</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="stage"><span class="num">1</span><span>Gentle Start<small>Initial oven loading</small></span></div>
+            </td>
+            <td>Use at start-up while granola begins travelling through the oven.</td>
+            <td><span class="speed">12 Hz</span></td>
+            <td><span class="speed">4.2 Hz / 4.2 Hz</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="stage"><span class="num">2</span><span>Kibbler Transition<small>First granola exits oven</small></span></div>
+            </td>
+            <td>When granola comes out of the oven and drops to the kibbler, increase speed.</td>
+            <td><span class="speed">14.5 Hz</span></td>
+            <td><span class="speed">5.3 Hz / 5.3 Hz</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="stage"><span class="num">3</span><span>10-Minute Increase<small>After kibbler transition</small></span></div>
+            </td>
+            <td>After 10 minutes at the kibbler transition setting.</td>
+            <td><span class="speed">16 Hz</span></td>
+            <td><span class="speed">6.5 Hz / 6.5 Hz</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="stage"><span class="num">4</span><span>20-Minute Running Speed<small>Final ramp step</small></span></div>
+            </td>
+            <td>After another 10 minutes, use final running speed.</td>
+            <td><span class="speed">17.2 Hz</span></td>
+            <td><span class="speed">7.7 Hz / 7.7 Hz</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <span class="hint">Hopper spreader values show left side / right side settings.</span>
+    </section>
+
+    <section class="section notes-grid" aria-label="Important notes">
+      <div class="delay-card">
+        <strong>Tunnel belt delay</strong>
+        If any interval on the tunnel belt exceeds 5 minutes, revert to the Kibbler Transition setting:<br><br>
+        Tunnel belt <span class="speed">14.5 Hz</span><br>
+        Hopper spreader <span class="speed">5.3 Hz / 5.3 Hz</span>
+      </div>
+      <div class="temp-card">
+        <strong>Temperature limit</strong>
+        Maximum oven temperature at any time:<br><br>
+        <span class="speed">150 C</span>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="daily-checks">
+      <h2 id="daily-checks">Daily checks to remember</h2>
+      <ul class="checks">
+        <li><span class="dot"></span><span>Pre-heat the oven before production setup begins.</span></li>
+        <li><span class="dot"></span><span>Start Transport, Cooling, and Heating.</span></li>
+        <li><span class="dot"></span><span>Wait until B3 / Burner 3 Actual Power is under 50% before starting production.</span></li>
+        <li><span class="dot"></span><span>Start with the Gentle Start setting: 12 Hz belt and 4.2 Hz / 4.2 Hz hopper spreader.</span></li>
+        <li><span class="dot"></span><span>When granola reaches the kibbler, follow the 10-minute ramp-up sequence.</span></li>
+        <li><span class="dot"></span><span>Keep the oven temperature at or below 150 C.</span></li>
+      </ul>
+    </section>
+
+    <footer>
+      Granola oven speed guide - read before changing tunnel belt or hopper spreader speeds.
+    </footer>
+  </main>
+</body>
+</html>
